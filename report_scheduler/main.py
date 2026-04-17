@@ -2,8 +2,7 @@ import pandas as pd
 
 def main():
     data = pd.read_excel('data/sample_data.xlsx')
-    # data = pd.read_csv('placeholder.csv')   
-    
+    data.columns = data.columns.str.strip()
     columns_to_keep = [
         'hotel_name',
         'arrival_date',
@@ -15,15 +14,23 @@ def main():
         'disc',
         'ADR',
         'sales_person',
-        'resv_status',
         'dis_channel'
     ]
-
-    report_df = data[columns_to_keep]
     
-    report_df.to_excel('output/daily_sales_report.xlsx', index=False)
+    report_df = data[columns_to_keep]
+
+    # Example insights
+    sales_by_hotel = report_df.groupby('hotel_name')['sales'].sum().reset_index().sort_values('sales', ascending=False)
+    sales_by_person = report_df.groupby('sales_person')['sales'].sum().reset_index().sort_values('sales', ascending=False)
+    
+    with pd.ExcelWriter('output/daily_sales_report.xlsx') as writer:
+        report_df.to_excel(writer, sheet_name='Raw Data', index=False)
+        sales_by_hotel.to_excel(writer, sheet_name='Sales by Hotel', index=False)
+        sales_by_person.to_excel(writer, sheet_name='Sales by Person', index=False)
+
     print("Report saved to output/daily_sales_report.xlsx")
-    print(report_df.head())
+    print("\nHotel Sales:\n", sales_by_hotel.head())
+    print("\nSales Person Sales:\n", sales_by_person.head())
     
     # OPTIONAL: Filter for today's date if you only want today's bookings
     # from datetime import datetime
