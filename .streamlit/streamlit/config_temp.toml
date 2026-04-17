@@ -1,0 +1,11 @@
+# Professional palette
+COLORS = {
+    'primary': '#1D428A',      # Deep navy (trust, authority)
+    'secondary': '#4C6EB1',    # Mid blue (data, insights)
+    'light': '#E8EEF7',        # Pale blue (backgrounds)
+    'neutral': '#F5F7FA',      # Off-white (page background)
+    'text': '#2C3E50',         # Dark grey (body text)
+    'subtitle': '#7F8C8D',     # Medium grey (labels)
+    'success': '#27AE60',      # Green (positive)
+    'alert': '#E74C3C'         # Red (negative/alert)
+}
